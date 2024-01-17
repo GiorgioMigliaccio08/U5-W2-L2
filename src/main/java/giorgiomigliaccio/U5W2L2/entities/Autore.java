@@ -70,4 +70,12 @@ public class Autore {
                 ", dataDiNascita=" + dataDiNascita +
                 '}';
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
