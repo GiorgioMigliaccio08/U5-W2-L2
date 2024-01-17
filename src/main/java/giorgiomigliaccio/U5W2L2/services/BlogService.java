@@ -11,23 +11,24 @@ import java.util.Random;
 public class BlogService {
     private List<Blog> blog = new ArrayList<>();
 
-    public List<Blog> getBlog() {
-        return this.blog;
-    }
-
-    public Blog save(Blog body) {
+    public Blogpost save(Blogpost blogpost) {
         Random rndm = new Random();
-        body.setId(rndm.nextInt(1, 2000));
-        this.blog.add(body);
-        return body;
+        blogpost.setId(rndm.nextInt());
+        blogpost.setCover("https://picsum.photos/200/300");
+        this.blogs.add(blogpost);
+        return blogpost;
     }
 
-    public Blog findById(int id) {
-        Blog found = null;
-        for (Blog user : this.blog) {
-            if (user.getId() == id) {
-                found = user;
-            }
+    public List<Blogpost> getBlogs() {
+        return this.blogs;
+    }
+
+    public Blogpost findById(int id) {
+        Blogpost found = null;
+
+        for (Blogpost blogpost : blogs) {
+            if (blogpost.getId() == id)
+                found = blogpost;
         }
         if (found == null)
             throw new NotFoundException(id);
@@ -35,27 +36,32 @@ public class BlogService {
     }
 
     public void findByIdAndDelete(int id) {
-        Iterator<Blog> iterator = this.blog.iterator();
+        ListIterator<Blogpost> iterator = this.blogs.listIterator();
+
         while (iterator.hasNext()) {
-            Blog current = iterator.next();
-            if (current.getId() == id) {
+            Blogpost currentBlog = iterator.next();
+            if (currentBlog.getId() == id) {
                 iterator.remove();
             }
         }
     }
 
-    public Blog findByIdAndUpdate(int id, Blog body) {
-        Blog found = null;
-        for (Blog blog : this.blog) {
-            if (blog.getId() == id) {
-                found = blog;
+    public Blogpost findByIdAndUpdate(int id, Blogpost body) {
+        Blogpost found = null;
+
+        for (Blogpost currentBlog : blogs) {
+            if (currentBlog.getId() == id) {
+                found = currentBlog;
+                found.setCover(body.getCover());
+                found.setCategory(body.getCategory());
+                found.setContent(body.getCover());
+                found.setReadingTime(body.getReadingTime());
                 found.setId(id);
-                found.setCategoria(body.getCategoria());
-                found.setTitolo(body.getTitolo());
             }
         }
         if (found == null)
             throw new NotFoundException(id);
         return found;
+
     }
 }
