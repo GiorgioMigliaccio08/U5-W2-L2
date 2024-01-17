@@ -15,19 +15,24 @@ public class AutoreService {
         return this.blog;
     }
 
-    public Autore save(Autore body) {
+    public Author save(Author author) {
         Random rndm = new Random();
-        body.setId(rndm.nextInt(1, 2000));
-        this.autore.add(body);
-        return body;
+        author.setId(rndm.nextInt());
+        author.setAvatar("https://ui-avatars.com/api/?name="+ author.getName() + "+" + author.getSurname());
+        this.authors.add(author);
+        return author;
     }
 
-    public AutorefindById(int id) {
-        Autore found = null;
-        for (Autore autore : this.autore) {
-            if (autore.getId() == id) {
-                found = autore;
-            }
+    public List<Author> getAuthors() {
+        return this.authors;
+    }
+
+    public Author findById(int id) {
+        Author found = null;
+
+        for (Author author : authors) {
+            if (author.getId() == id)
+                found = author;
         }
         if (found == null)
             throw new NotFoundException(id);
@@ -35,27 +40,31 @@ public class AutoreService {
     }
 
     public void findByIdAndDelete(int id) {
-        Iterator<Autore> iterator = this.autore.iterator();
+        ListIterator<Author> iterator = this.authors.listIterator();
+
         while (iterator.hasNext()) {
-            Autore current = iterator.next();
-            if (current.getId() == id) {
+            Author currentAuthor = iterator.next();
+            if (currentAuthor.getId() == id) {
                 iterator.remove();
             }
         }
     }
 
-    public Autore findByIdAndUpdate(int id, Autore body) {
-        Autore found = null;
-        for (Autore autore : this.autore) {
-            if (autore.getId() == id) {
-                found = autore;
+    public Author findByIdAndUpdate(int id, Author author) {
+        Author found = null;
+
+        for (Author currentAuthor : authors) {
+            if (currentAuthor.getId() == id) {
+                found = currentAuthor;
+                found.setName(author.getName());
+                found.setSurname(author.getSurname());
                 found.setId(id);
-                found.setNome(body.getNome());
-                found.setCognome(body.getCognome());
             }
         }
         if (found == null)
             throw new NotFoundException(id);
         return found;
+
     }
 }
+
