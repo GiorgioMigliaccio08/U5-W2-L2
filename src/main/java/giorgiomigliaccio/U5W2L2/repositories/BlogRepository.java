@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
-public class BlogRepository {
+public class BlogRepository extends JpaRepository<Blogpost, Integer>{
+    List<Blogpost> findByAuthor(Author author);
 }
