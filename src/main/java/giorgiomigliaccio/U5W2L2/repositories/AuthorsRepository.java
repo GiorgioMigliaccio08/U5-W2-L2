@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 public class AuthorsRepository extends JpaRepository<Autore, Integer> {
+    extends JpaRepository<Author, Integer>
 }
